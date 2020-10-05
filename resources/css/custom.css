@@ -1,0 +1,8 @@
+.login-background{
+    background: rgb(34,0,67);
+    background: linear-gradient(149deg, rgba(34,0,67,1) 0%, rgba(84,0,132,1) 70%, rgba(110,0,219,1) 100%);
+}
+
+.white-shadow{
+    box-shadow: 0 15px 20px -5px rgba(255, 255, 255, 0.2), 0 10px 10px -5px rgba(55, 65, 81, 0.04);
+}
