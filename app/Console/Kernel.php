@@ -25,6 +25,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        // Import LDAP users hourly.
+        /* Import / sync ldap users hourly */
+        /*$schedule->command('ldap:import ldap', [
+            '--no-interaction',
+            '--restore',
+            '--delete',
+            '--filter' => '(objectclass=user)',
+        ])->hourly();*/
     }
 
     /**
