@@ -1,30 +1,127 @@
-
-@foreach($users as $user)
-    <div class="grid grid-flow-col flex grid-cols-6 grid-rows-1 gap-4 mt-8 bg-gray-400 p-6 rounded-lg shadow-xl">
-        <div class="text-center">
-            @if(!empty($user->profile_photo_path))
-                <img class="rounded-full h-28 w-28 flex items-center justify-center ml-10" src="{{ asset('storage/'.$user->profile_photo_path ) }}" alt="avatar">
-            @else
-                @svg('undraw/profile_pic', '',['width'=>"200",'height'=>"130",'class'=>"object-start"])
-            @endif
-        </div>
-        <div class="col-span-5 text-left">
-            <div class="py-4 px-6">
-                <h1 class="text-2xl font-semibold text-gray-800">{{ $user->name }}</h1>
-                <p class="py-2 text-lg text-gray-700">{{$user->email}}</p>
-
-                {{--        <div class="flex items-center mt-4 text-gray-700">
-                            <svg class="h-6 w-6 fill-current" viewBox="0 0 20 20">
-                                <path d="M10,1.375c-3.17,0-5.75,2.548-5.75,5.682c0,6.685,5.259,11.276,5.483,11.469c0.152,0.132,0.382,0.132,0.534,0c0.224-0.193,5.481-4.784,5.483-11.469C15.75,3.923,13.171,1.375,10,1.375 M10,17.653c-1.064-1.024-4.929-5.127-4.929-10.596c0-2.68,2.212-4.861,4.929-4.861s4.929,2.181,4.929,4.861C14.927,12.518,11.063,16.627,10,17.653 M10,3.839c-1.815,0-3.286,1.47-3.286,3.286s1.47,3.286,3.286,3.286s3.286-1.47,3.286-3.286S11.815,3.839,10,3.839 M10,9.589c-1.359,0-2.464-1.105-2.464-2.464S8.641,4.661,10,4.661s2.464,1.105,2.464,2.464S11.359,9.589,10,9.589"></path>                </svg>
-                            <h1 class="px-2 text-sm">{{user.location}}</h1>
-                        </div>
-                        <div class="flex items-center mt-4 text-gray-700">
-                            <svg class="h-6 w-6 fill-current" viewBox="0 0 20 20">
-                                <path d="M16.469,8.924l-2.414,2.413c-0.156,0.156-0.408,0.156-0.564,0c-0.156-0.155-0.156-0.408,0-0.563l2.414-2.414c1.175-1.175,1.175-3.087,0-4.262c-0.57-0.569-1.326-0.883-2.132-0.883s-1.562,0.313-2.132,0.883L9.227,6.511c-1.175,1.175-1.175,3.087,0,4.263c0.288,0.288,0.624,0.511,0.997,0.662c0.204,0.083,0.303,0.315,0.22,0.52c-0.171,0.422-0.643,0.17-0.52,0.22c-0.473-0.191-0.898-0.474-1.262-0.838c-1.487-1.485-1.487-3.904,0-5.391l2.414-2.413c0.72-0.72,1.678-1.117,2.696-1.117s1.976,0.396,2.696,1.117C17.955,5.02,17.955,7.438,16.469,8.924 M10.076,7.825c-0.205-0.083-0.437,0.016-0.52,0.22c-0.083,0.205,0.016,0.437,0.22,0.52c0.374,0.151,0.709,0.374,0.997,0.662c1.176,1.176,1.176,3.088,0,4.263l-2.414,2.413c-0.569,0.569-1.326,0.883-2.131,0.883s-1.562-0.313-2.132-0.883c-1.175-1.175-1.175-3.087,0-4.262L6.51,9.227c0.156-0.155,0.156-0.408,0-0.564c-0.156-0.156-0.408-0.156-0.564,0l-2.414,2.414c-1.487,1.485-1.487,3.904,0,5.391c0.72,0.72,1.678,1.116,2.696,1.116s1.976-0.396,2.696-1.116l2.414-2.413c1.487-1.486,1.487-3.905,0-5.392C10.974,8.298,10.55,8.017,10.076,7.825"></path>
-                            </svg>
-                            <h1 class="px-2 text-sm">{{user.blog}}</h1>
-                        </div>--}}
-            </div>
+<div>
+    {{-- Search Input form--}}
+    <div class=" text-2xl">
+        <div class="w-full">
+            <form class="pt-2">
+                <input
+                    wire:model.debounce.300ms="search"
+                    class="text-indigo-500 shadow appearance-none border rounded-lg w-full py-2 px-3 pl-16 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="search"
+                    name="search"
+                    type="text"
+                    placeholder="Search user by name, email, service or company">
+                @svg('zondicons/search', '',['class'=>" relative bottom-9 left-5 h-6 w-6 object-start mr-2
+                text-indigo-500 fill-current"])
+            </form>
         </div>
     </div>
-@endforeach
+    {{--List of users cards--}}
+    <div class="italic text-sm mb-4">{{ count($users)<10 ? count($users).' résultats' : 'Plus de 10 résultats, vous pouvez affiner votre recherche' }}</div>
+    <div class="" wire:loading.remove>
+        <div class="grid grid-flow-row flex grid-cols-6 gap-5 mt-3">
+            @if(!empty($users))
+                @foreach($users as $user)
+
+                    <div class="col-span-3 bg-gray-300 p-6 rounded-lg shadow-xl">
+                        <div class="grid grid-flow-row flex grid-cols-3">
+                            <div class="text-center flex items-center col-span-1">
+                                @if(!empty($user->profile_photo_path))
+                                    <img class="border-indigo-700 border-2 rounded-full h-28 w-28 flex items-center justify-center ml-5 "
+                                         src="{{ asset('storage/'.$user->profile_photo_path ) }}" alt="avatar">
+                                @else
+                                    @if($user->gender == 'male')
+                                        @svg('undraw/male_avatar', '',['class'=>"border-indigo-700 border-2 rounded-full h-28 w-28 object-start  ml-5"])
+                                    @elseif($user->gender == 'female')
+                                        @svg('undraw/female_avatar', '',['class'=>"border-indigo-700 border-2 rounded-full h-28 w-28 object-start  ml-5"])
+                                    @else
+                                        @svg('undraw/profile_pic', '',['class'=>"border-indigo-700 border-2 rounded-full h-28 w-28 object-start  ml-5"])
+                                    @endif
+                                @endif
+                            </div>
+                            <div class="col-span-2 text-left">
+                                <div class="py-4 px-0">
+                                    <h1 class="text-2xl font-semibold text-gray-800">{{ $user->name }}</h1>
+                                    <ul class="leading-3 text-gray-600">
+                                        <div class="w-full bg-indigo-500 h-0.5 mb-3 mt-3"></div>
+                                        <li>
+                                            <div class="flex items-center">
+                                                @svg('zondicons/home', '',['class'=>"h-4 w-4 object-start mr-2
+                                                fill-current"])
+                                                <span
+                                                    class="py-2 text-lg text-gray-700">{{$user->service[0]->company->name}}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="flex items-center">
+                                                @svg('zondicons/at-symbol', '',['class'=>"h-4 w-4 object-start mr-2
+                                                fill-current"])
+                                                <span class="py-2 text-lg text-gray-700">{{$user->email}}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="flex items-center">
+                                                @svg('zondicons/computer-desktop', '',['class'=>"h-4 w-4 object-start
+                                                mr-2 fill-current"])
+                                                <span
+                                                    class="py-2 text-lg text-gray-700">{{$user->employment[0]->name}}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="flex items-center">
+                                                @svg('zondicons/location', '',['class'=>"h-4 w-4 object-start mr-2
+                                                fill-current"])
+                                                <span
+                                                    class="py-2 text-lg text-gray-700">{{$user->service[0]->name}}</span>
+                                            </div>
+                                        </li>
+                                        @if($user->is_manager)
+                                        <li>
+                                            <div class="flex items-center">
+                                                @svg('zondicons/star-full', '',['class'=>"text-indigo-500 h-4 w-4 object-start mr-2
+                                                fill-current"])
+                                                <span class="py-2 text-lg text-indigo-700">Manager</span>
+                                            </div>
+                                        </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {{-- Actions--}}
+                            <div class="col-span-3 h-auto ml-5">
+                                <div class="w-full bg-indigo-500 h-0.5 mb-3 mt-1"></div>
+                                <h4 class="mb-3">Actions :</h4>
+                                <div class="inline-flex">
+                                    <button
+                                        class="mr-2 inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 border border-indigo-800 rounded">
+                                        @svg('zondicons/edit-pencil', '',['class'=>"h-3 w-3 object-start mr-2
+                                        fill-current"])
+                                        <span>Edit</span>
+                                    </button>
+                                    <button
+                                        class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 border border-indigo-800 rounded">
+                                        @svg('zondicons/calendar', '',['class'=>"h-3 w-3 object-start mr-2
+                                        fill-current"])
+                                        <span>Planning</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                @endforeach
+            @else
+
+            @endif
+        </div>
+    </div>
+
+    {{--spinner loading--}}
+    <div class="items-center justify-center mt-12 mx-auto w-48">
+        <div wire:loading class="p-10">
+            @svg('zondicons/refresh', '',['class'=>"h-48 w-48 mx-auto fill-current text-indigo-500 animate-spin"])
+        </div>
+    </div>
+
+
+</div>

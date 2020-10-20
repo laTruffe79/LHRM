@@ -28,9 +28,10 @@ class User extends Authenticatable implements LdapAuthenticatable
      *
      * @var array
      */
-    protected $fillable = [
+    /*protected $fillable = [
         'name', 'email', 'password',
-    ];
+    ];*/
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -61,4 +62,40 @@ class User extends Authenticatable implements LdapAuthenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function workingTerms(){
+        return $this->hasMany(WorkingTerm::class);
+    }
+
+    /**
+     * get active working terms
+     * @return mixed
+     */
+    public function activeWorkingTerms()
+    {
+        return $this->workingTerms()->active();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function employment()
+    {
+        return $this
+            ->belongsToMany(Employment::class,'working_terms')
+            ->where('active','=',1);
+    }
+
+    public function service()
+    {
+        return $this
+            ->belongsToMany(Service::class,'working_terms')
+            ->where('active','=',1);
+    }
+
+    public function bonuses()
+    {
+        return $this->hasMany(Bonus::class);
+    }
+
 }
