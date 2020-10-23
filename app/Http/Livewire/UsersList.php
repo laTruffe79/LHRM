@@ -13,7 +13,7 @@ class UsersList extends Component
     public function render()
     {
         if($this->search==''){
-            $this->users = User::with(['activeWorkingTerms','employment','service.company'])
+            $this->users = User::with(['activeWorkingTerms','employment','service','service.company'])
                 ->orderBy('users.name','asc')
                 ->limit(20)
                 ->get();
@@ -32,6 +32,8 @@ class UsersList extends Component
                 ->limit(10)
                 ->get();
         }
+
+        //dd($this->users);
 
         return view('livewire.resources.user.users-list',['users' => $this->users]);
     }

@@ -15,4 +15,6 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
-    ]);
+    ])
+    .postCss('resources/css/fullcalendar.css','public/css');
+mix.js('resources/js/fullcalendar.js','public/js')

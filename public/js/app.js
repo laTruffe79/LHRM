@@ -19334,6 +19334,17 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/css/fullcalendar.css":
+/*!****************************************!*\
+  !*** ./resources/css/fullcalendar.css ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -19378,14 +19389,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/css/app.css ***!
-  \***********************************************************/
+/*!********************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/css/app.css ./resources/css/fullcalendar.css ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\Dev\laragon\www\LaravelHRM\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Dev\laragon\www\LaravelHRM\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! D:\Dev\laragon\www\LaravelHRM\resources\css\app.css */"./resources/css/app.css");
+module.exports = __webpack_require__(/*! D:\Dev\laragon\www\LaravelHRM\resources\css\fullcalendar.css */"./resources/css/fullcalendar.css");
 
 
 /***/ })

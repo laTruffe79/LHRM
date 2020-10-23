@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PlanningController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,14 +20,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth:sanctum', 'verified'])
+    ->name('dashboard');
 
 /* Protected Resources */
 Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::resources([
         'users' => UserController::class,
     ]);
+    Route::get('planning/{id}', [PlanningController::class, 'index']);
 });
 

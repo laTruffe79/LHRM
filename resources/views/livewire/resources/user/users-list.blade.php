@@ -48,7 +48,8 @@
                                                 @svg('zondicons/home', '',['class'=>"h-4 w-4 object-start mr-2
                                                 fill-current"])
                                                 <span
-                                                    class="py-2 text-lg text-gray-700">{{$user->service[0]->company->name}}</span>
+                                                    class="py-2 text-lg text-gray-700">{{$user->service[0]->company->name}}
+                                                </span>
                                             </div>
                                         </li>
                                         <li>
@@ -77,7 +78,7 @@
                                         @if($user->is_manager)
                                         <li>
                                             <div class="flex items-center">
-                                                @svg('zondicons/star-full', '',['class'=>"text-indigo-500 h-4 w-4 object-start mr-2
+                                                @svg('zondicons/star-full', '',['class'=>"text-indigo-700 h-4 w-4 object-start mr-2
                                                 fill-current"])
                                                 <span class="py-2 text-lg text-indigo-700">Manager</span>
                                             </div>
@@ -94,16 +95,17 @@
                                 <div class="inline-flex">
                                     <button
                                         class="mr-2 inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 border border-indigo-800 rounded">
-                                        @svg('zondicons/edit-pencil', '',['class'=>"h-3 w-3 object-start mr-2
-                                        fill-current"])
+                                        @svg('zondicons/edit-pencil', '',['class'=>"h-3 w-3 object-start mr-2 fill-current"])
                                         <span>Edit</span>
                                     </button>
-                                    <button
-                                        class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 border border-indigo-800 rounded">
-                                        @svg('zondicons/calendar', '',['class'=>"h-3 w-3 object-start mr-2
-                                        fill-current"])
-                                        <span>Planning</span>
-                                    </button>
+                                    <a href="{{url('/planning/'.$user->id)}}">
+                                        <button
+                                            class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 border border-indigo-800 rounded">
+                                            @svg('zondicons/calendar', '',['class'=>"h-3 w-3 object-start mr-2 fill-current"])
+                                            <span>Planning</span>
+                                        </button>
+                                    </a>
+
                                 </div>
                             </div>
                         </div>
